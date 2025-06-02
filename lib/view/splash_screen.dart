@@ -1,28 +1,34 @@
+import 'package:ecommerce_app/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  SplashScreen({super.key});
+
+  final AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
+    // Navigate base on auth state after 2.5 seconds
+    Future.delayed(const Duration(milliseconds: 2500), () {
+      if (authController.isFirstTime) {
+        Get.offAllNamed('/welcome');
+      } else if (authController.isLoggedIn) {
+        Get.offAllNamed('/home');
+      } else {
+        Get.offAllNamed('/login');
+      }
+    });
     return Scaffold(
-
-
-      // Navigate base on auth state after 2.5 seconds
-
-
-
-      
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).primaryColor.withOpacity(0.6),
-              Theme.of(context).primaryColor.withOpacity(0.8),
               Theme.of(context).primaryColor,
+              Theme.of(context).primaryColor.withOpacity(0.8),
+              Theme.of(context).primaryColor.withOpacity(0.8),
             ],
           ),
         ),
@@ -64,7 +70,7 @@ class SplashScreen extends StatelessWidget {
                           ),
                           child: Icon(
                             Icons.shopping_bag_outlined,
-                            size: 48,
+                            size: 60,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -82,7 +88,7 @@ class SplashScreen extends StatelessWidget {
                         opacity: value,
                         child: Transform.translate(
                           offset: Offset(0, 25 * (1 - value)),
-                         child: child,
+                          child: child,
                         ),
                       );
                     },
@@ -95,7 +101,6 @@ class SplashScreen extends StatelessWidget {
                             fontSize: 32,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 2,
-
                           ),
                         ),
                         Text(
@@ -105,7 +110,6 @@ class SplashScreen extends StatelessWidget {
                             fontSize: 32,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 2,
-
                           ),
                         ),
                       ],
@@ -116,15 +120,11 @@ class SplashScreen extends StatelessWidget {
                     bottom: 48,
                     left: 0,
                     right: 0,
-                    child:
-                    TweenAnimationBuilder<double>(
+                    child: TweenAnimationBuilder<double>(
                       tween: Tween(begin: 0.0, end: 1.0),
                       duration: const Duration(milliseconds: 1500),
                       builder: (context, value, child) {
-                        return Opacity(
-                          opacity: value,
-                          child: child,
-                        );
+                        return Opacity(opacity: value, child: child);
                       },
                       child: Text(
                         "Style Is Everything",
@@ -133,7 +133,7 @@ class SplashScreen extends StatelessWidget {
                           color: Colors.white.withOpacity(0.9),
                           fontSize: 14,
                           letterSpacing: 2,
-                          fontWeight: FontWeight.w300
+                          fontWeight: FontWeight.w300,
                         ),
                       ),
                     ),
@@ -158,6 +158,7 @@ class GridPattern extends StatelessWidget {
     return CustomPaint(painter: GridPainter(color: color));
   }
 }
+
 // background line
 class GridPainter extends CustomPainter {
   final Color color;
