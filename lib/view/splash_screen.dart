@@ -1,4 +1,7 @@
 import 'package:ecommerce_app/controllers/auth_controller.dart';
+import 'package:ecommerce_app/view/main_screen.dart';
+import 'package:ecommerce_app/view/onboarding_screen.dart';
+import 'package:ecommerce_app/view/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,16 +12,16 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Navigate base on auth state after 2.5 seconds
-    Future.delayed(const Duration(milliseconds: 2500), () {
+    // Navigate base on auth state after 3 seconds
+    Future.delayed(const Duration(milliseconds: 3000), () {
       if (authController.isFirstTime) {
-        Get.offAllNamed('/welcome');
+        Get.off(() => const OnboardingScreen());
       } else if (authController.isLoggedIn) {
-        Get.offAllNamed('/home');
+        Get.off(() => const MainScreen());
       } else {
-        Get.offAllNamed('/login');
-      }
-    });
+        Get.off(() => const SigninScreen());
+        }
+        });
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -26,9 +29,17 @@ class SplashScreen extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor.withOpacity(0.8),
-              Theme.of(context).primaryColor.withOpacity(0.8),
+              Theme
+                  .of(context)
+                  .primaryColor,
+              Theme
+                  .of(context)
+                  .primaryColor
+                  .withOpacity(0.8),
+              Theme
+                  .of(context)
+                  .primaryColor
+                  .withOpacity(0.8),
             ],
           ),
         ),
@@ -71,7 +82,9 @@ class SplashScreen extends StatelessWidget {
                           child: Icon(
                             Icons.shopping_bag_outlined,
                             size: 60,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
                           ),
                         ),
                       );
@@ -168,9 +181,9 @@ class GridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint =
-        Paint()
-          ..color = color
-          ..strokeWidth = 0.5;
+    Paint()
+      ..color = color
+      ..strokeWidth = 0.5;
 
     final spacing = 20.0;
 
