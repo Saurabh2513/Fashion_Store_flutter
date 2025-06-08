@@ -1,5 +1,10 @@
+import 'package:ecommerce_app/controllers/auth_controller.dart';
 import 'package:ecommerce_app/utils/app_textstyle.dart';
+import 'package:ecommerce_app/view/main_screen.dart';
+import 'package:ecommerce_app/view/signin_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -30,6 +35,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       description: 'Simple And Secure Shopping At your Fingertips',
     ),
   ];
+
+  // Handle change button clicked
+  void _handleGetStarted() {
+    final AuthController authController = Get.find<AuthController>();
+    authController.setFirstTimeDone();
+    Get.off(()=>const SigninScreen());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,12 +127,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => _handleGetStarted(),
                   child: Text(
                     "Skip",
                     style: AppTextStyle.withColor(
                       AppTextStyle.buttonMedium,
                       isDark ? Colors.grey[400]! : Colors.grey[600]!,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_currentpage < _items.length - 1) {
+                      _pageController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    } else {
+                      _handleGetStarted();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(
+                    _currentpage < _items.length - 1 ? "Next" : "Get Started",
+                    style: AppTextStyle.withColor(
+                      AppTextStyle.buttonMedium,
+                      Colors.white,
                     ),
                   ),
                 ),
