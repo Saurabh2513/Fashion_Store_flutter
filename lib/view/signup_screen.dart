@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/utils/app_textstyle.dart';
+import 'package:ecommerce_app/view/main_screen.dart';
 import 'package:ecommerce_app/view/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -125,7 +126,7 @@ class SignupScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Get.off(() => MainScreen()),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -143,6 +144,7 @@ class SignupScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
+              // sign in text button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
