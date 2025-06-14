@@ -8,10 +8,16 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
     final NavigationController navigationController = Get.put(
       NavigationController(),
     );
-    return GetBuilder(builder: builder);
+    return GetBuilder(builder: () =>
+        Scaffold(
+          backgroundColor: Theme.of(context)
+        )
+    );
   }
 }
